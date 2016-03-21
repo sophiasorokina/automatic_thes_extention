@@ -2,6 +2,16 @@
 Thumbs.db
 ehthumbs.db
 
+#Python compiled files
+*.pyc
+
+#IDE config files
+*.idea
+
+#Git config files
+*.gitattributes
+*.gitignore
+
 # Folder config file
 Desktop.ini
 
