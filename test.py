@@ -50,6 +50,5 @@ with open ('./test.txt', 'w') as f:
 
 #with open ('./input.txt') as f:
     #print json.load(f, cls=classes.CandWordDecoder)
-print 'yep'
-print 'no'
+
 

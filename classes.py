@@ -144,23 +144,3 @@ class CandidateWord(object):
 
     def sort_concepts(self, key):
         self.concepts.sorted(key=key)
-
-# class CustomObjEncoder(JSONEncoder):
-#     def default(self, obj):
-#         if isinstance(obj, object):
-#             d = dict(obj.__dict__.items())
-#             for (k, v) in d.iteritems():
-#                 if isinstance(v, unicode):
-#                     d[k] = v.encode('utf-8')
-#             return d
-#         # Let the base class default method raise the TypeError
-#         return JSONEncoder.default(self, obj)
-#
-# class CandWordDecoder(JSONDecoder):
-#     def __init__(self, *args, **kargs):
-#         JSONDecoder.__init__(self, object_hook=self.lst_to_obj_lst, *args, **kargs)
-#
-#     def lst_to_obj_lst(self, lst):
-#         for wc in lst:
-#            print wc
-#         return lst
