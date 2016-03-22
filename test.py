@@ -5,6 +5,8 @@ import xml.etree.cElementTree as et
 #import cPickle, yaml, json
 import jsonpickle, yaml
 import classes
+from os import getcwd
+from os.path import join, split
 
 country_data_as_string = '''<?xml version="1.0"?>
 <data>
@@ -41,10 +43,10 @@ with open ('./test.txt', 'w+') as f:
     #json.dump(classes.Concept(123), f, cls=classes.CustomObjEncoder, ensure_ascii=False)
     cw = classes.CandidateWord(u'лала')
     concept = classes.Concept(123)
-    cw.concepts.append(concept)
+    cw.concepts.add(concept)
     cw_json = jsonpickle.encode(cw)
-    print cw_json
-    print jsonpickle.decode(cw_json)
+    # print cw_json
+    # print jsonpickle.decode(cw_json)
 
     #cw_yaml = yaml.dump(cw, f)
     #print yaml.load(f)
@@ -53,5 +55,18 @@ with open ('./test.txt', 'w+') as f:
 
 #with open ('./input.txt') as f:
     #print json.load(f, cls=classes.CandWordDecoder)
+
+proj_path = split(getcwd())[0]
+temp_path = join(proj_path, 'temp')
+with open(join(temp_path, 'concepts for bindings with first-step synonyms3.txt')) as file:
+    raw_data = file.read()
+candidate_words = jsonpickle.decode(raw_data)
+for word in candidate_words:
+    print word.lemma
+    for concept in word.concepts:
+        print concept.name, concept.id
+    print '\n'
+    break
+
 
 

@@ -41,7 +41,7 @@ def main():
                                            rel_tree, model)
 
     out_pickle_path = path.join(project_path, 'temp',
-                            'concepts for bindings with first-step synonyms2.txt')
+                            'concepts for bindings with first-step synonyms3.txt')
     with open(out_pickle_path, 'w') as output_file:
         output_file.write(jsonpickle.encode(candidate_words))
 

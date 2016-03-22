@@ -19,14 +19,14 @@ def main():
     rel_tree = et.parse(join(ruthes_path, 'relations.xml'))
 
     temp_path = join(proj_path, 'temp')
-    with open(join(temp_path, 'concepts for bindings with first-step synonyms2.txt')) as file:
+    with open(join(temp_path, 'concepts for bindings with first-step synonyms3.txt')) as file:
         raw_data = file.read()
     candidate_words = jsonpickle.decode(raw_data)
 
     # with open(join(temp_path, 'mutual_freqs.yml')) as file:
     #     mutual_freqs = yaml.load(file)
-    # with open(join(temp_path, 'pmi_w2v.yml')) as input_file:
-    #     pmi_w2v = yaml.load(input_file)
+    with open(join(temp_path, 'pmi_w2v.yml')) as input_file:
+        pmi_w2v = yaml.load(input_file)
     with open(join(temp_path, 'frequent_entries.yml')) as file:
         frequent_entries = yaml.load(file)
 
@@ -38,12 +38,10 @@ def main():
     for word in candidate_words:
         for concept in word.concepts:
             #concept.get_syn_entries(syn_tree.getroot(), te_tree.getroot(), freq_bound=100, freqs=None)
-            concept.get_syn_entries(syn_tree.getroot(), te_tree.getroot(), word.lemma, model, frequent_entries) #pmi_w2v, mutual_freqs
+            concept.get_syn_entries(syn_tree.getroot(), te_tree.getroot(), word.lemma, pmi_w2v, frequent_entries) #pmi_w2v, mutual_freqs word.lemma, model
             #concept.sort_text_entries()
-            break
-        break
 
-    out_pickle_path = join(proj_path, 'temp', 'concepts_for_binding_with_te2.txt')
+    out_pickle_path = join(proj_path, 'temp', 'all_te.txt')
     with open(out_pickle_path, 'w') as output_file:
         output_file.write(jsonpickle.encode(candidate_words))
 

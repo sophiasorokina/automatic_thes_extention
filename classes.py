@@ -8,13 +8,13 @@ from json import JSONDecoder, JSONEncoder
 
 class TextEntry(object):
     ''' Class for RuThes text entry representation. '''
-    def __init__(self, id=None, name=None, lemma=None, te_root = None, word=None, model=None): #TODO normal parameters, * or ** then check if there is such a var in dict. Or even a cycle py existing vars
+    def __init__(self, id=None, name=None, lemma=None, te_root = None, word=None, pmi_w2v=None): #TODO normal parameters, * or ** then check if there is such a var in dict. Or even a cycle py existing vars
         self.id = id            #int
         self.name = name        #unicode string
         self.lemma = lemma      #unicode string
         self.word = word
         if te_root:
-            self.fill_te_fields(te_root, model)
+            self.fill_te_fields(te_root, pmi_w2v)
         # if pmi:
         #     self.pmi = pmi
         # if w2v:
@@ -26,7 +26,7 @@ class TextEntry(object):
     # def __eq__(self, other):
     #     return  self.id == other.id
 
-    def fill_te_fields(self, te_root, model=None):
+    def fill_te_fields(self, te_root, pmi_w2v=None):
         if self.lemma:
             entry = te_root.find(".*[lemma='%s']" % self.lemma.upper())
             if entry:
@@ -41,14 +41,17 @@ class TextEntry(object):
                 self.lemma = entry[1].text.lower()
             else:
                 print "Error: no word with id '%(id)s' in text_entry.xml" % self.__dict__
-        if model:
-            self.w2v_sim = -1
-            try:
-                s = model.n_similarity([self.word.encode('utf-8')], self.lemma.encode('utf-8').split())
-            except KeyError:
-                s = 0
-            if s:
-                self.w2v_sim = 3
+        if pmi_w2v:
+            #print pmi_w2v[self.word]
+            self.w2v_sim = float(pmi_w2v[self.word].get(self.lemma, [u'-1', u'-1'])[1])
+        # if model:
+        #     self.w2v_sim = -1
+        #     try:
+        #         s = model.n_similarity([self.word.encode('utf-8')], self.lemma.encode('utf-8').split())
+        #     except KeyError:
+        #         s = 0
+        #     if s:
+        #         self.w2v_sim = 3
                 #print 'No w2v entry for word "%(word)s"' % self.__dict__
 
     def get_syn_concepts(self, syn_root, concept_root):
@@ -87,7 +90,7 @@ class Concept(object):
             print "Error: no concept with id '%(id)d'" % self.__dict__
 
     #def get_syn_entries(self, syn_root, te_root, freq_bound=None, freqs=None):
-    def get_syn_entries(self, syn_root, te_root, word, model, frequent_entries=None): #pmi_w2v, mutual_freqs,
+    def get_syn_entries(self, syn_root, te_root, word, pmi_w2v, frequent_entries=None): #pmi_w2v, mutual_freqs,
         ''' For each concept find related entries with frequences > freq_bound. '''
         entry_rels = syn_root.findall('./entry_rel[@concept_id="%(id)d"]' % self.__dict__)
         if frequent_entries:
@@ -100,13 +103,13 @@ class Concept(object):
             for entry_rel in entry_rels:
                 #te = TextEntry(id=int(entry_rel.get('entry_id')), te_root=te_root, word=word, model=model)
                 #print word
-                te = TextEntry(id=int(entry_rel.get('entry_id')), te_root=te_root, word=word, model=model)
+                te = TextEntry(id=int(entry_rel.get('entry_id')), te_root=te_root, word=word, pmi_w2v=pmi_w2v)
                 if te.lemma in frequent_entries:
                     text_entries.append(te)
 
             self.text_entries = text_entries
         else:
-            self.text_entries = [TextEntry(id=int(entry_rel.get('entry_id')), te_root=te_root, word=word, model=model) for entry_rel in entry_rels]
+            self.text_entries = [TextEntry(id=int(entry_rel.get('entry_id')), te_root=te_root, word=word, pmi_w2v=pmi_w2v) for entry_rel in entry_rels]
 
     def get_rel_concepts(self, rel_root, concept_root, rel_types):
         for rel_type in rel_types:
@@ -117,11 +120,21 @@ class Concept(object):
                 return []
 
     def sort_text_entries(self, key):
-        self.text_entries.sorted(key=key)
+        self.text_entries.sort(key=key, reverse=True)
 
-    def sum_te_w2v(self):
-        self.w2v_sum = sum([entry.w2v for entry in self.text_entries if entry.w2v > 0])
+    @property
+    def w2v_sum(self):
+        return sum([entry.w2v_sim for entry in self.text_entries if entry.w2v_sim > 0])
+        #self.w2v_sum = sum([entry.w2v_sim for entry in self.text_entries if entry.w2v_sim > 0])
+        #print self.w2v_sum
 
+    @property
+    def w2v_mean(self):
+        positive_te = [entry.w2v_sim for entry in self.text_entries if entry.w2v_sim > 0]
+        try:
+            return sum(positive_te) / len(positive_te)
+        except ZeroDivisionError:
+            return 0
     #def te_w2v_mean(self):
     #    self.te_w2v_sum() / len(self.text_entries)
 
@@ -133,7 +146,7 @@ class CandidateWord(object):
         if concepts:
             self.concepts = concepts
         else:
-            self.concepts = []
+            self.concepts = set()
 
     def get_concepts_for_binding(self, te_tree, syn_tree,
                                  concept_tree, rel_tree, model):
@@ -162,22 +175,31 @@ class CandidateWord(object):
             #self.first_step_entries = topn_similar_entries
             return topn_similar_entries
 
-        def add_higher_concepts(concepts, rec_depth, rel_root, concept_root, rel_types=[u'ВЫШЕ']):
+        def add_higher_concepts(rec_depth, rel_root, concept_root, rel_types=[u'ВЫШЕ']):
             def rec_helper(concepts, rec_depth):
                 if rec_depth > 0:
                     for concept in concepts:
                         higher_concepts = concept.get_rel_concepts(rel_root, concept_root, rel_types)
-                        self.concepts.extend(higher_concepts)
+                        #self.concepts.extend(higher_concepts)
+
+                        #not_set_concepts = self.concepts.extend(higher_concepts)[:]
+                        #self.concepts = list(set(not_set_concepts))
+                        self.concepts.update(higher_concepts)
                         rec_helper(higher_concepts, rec_depth-1)
-            rec_helper(concepts, rec_depth)
-            self.concepts = list(set(self.concepts))
+
+            rec_helper(self.concepts.copy(), rec_depth)
+            #self.concepts = list(set(self.concepts))
 
         sim_entries = most_similar(self.lemma, model)
         first_step_concepts = []
         for entry in sim_entries:
             first_step_concepts.extend(entry.get_syn_concepts(syn_tree.getroot(), concept_tree.getroot()))
+        #self.concepts.extend(list(set(first_step_concepts)))
+        self.concepts.update(first_step_concepts)
 
-        add_higher_concepts(first_step_concepts, 2, rel_tree.getroot(), concept_tree.getroot())
+        add_higher_concepts(2, rel_tree.getroot(), concept_tree.getroot())
 
     def sort_concepts(self, key):
-        self.concepts.sorted(key=key)
+        sorted_concepts = list(self.concepts)
+        sorted_concepts.sort(key=key, reverse=True)
+        return sorted_concepts
