@@ -15,10 +15,10 @@ def main():
     thes_full_path = path.join(ruthes_path, 'thes_full.txt')
     model_path = path.join(project_path, 'models', 'model_big morph right hyphen.txt')
 
-    text_entry_tree = et.parse(path.join(ruthes_path, 'text_entry.xml'))
-    synonym_tree = et.parse(path.join(ruthes_path, 'synonyms.xml'))
+    te_tree = et.parse(path.join(ruthes_path, 'text_entry.xml'))
+    syn_tree = et.parse(path.join(ruthes_path, 'synonyms.xml'))
     concept_tree = et.parse(path.join(ruthes_path, 'concepts.xml'))
-    relation_tree = et.parse(path.join(ruthes_path, 'relations.xml'))
+    rel_tree = et.parse(path.join(ruthes_path, 'relations.xml'))
 
     thes_full = []
     with open(thes_full_path) as file:
@@ -37,14 +37,13 @@ def main():
 
     candidate_words = [CandidateWord(word.decode('utf-8')) for word in embed_words]
     for cand_word in candidate_words:
-        cand_word.get_concepts_for_binding(text_entry_tree,synonym_tree, concept_tree,
-                                           relation_tree, model)
+        cand_word.get_concepts_for_binding(te_tree,syn_tree, concept_tree,
+                                           rel_tree, model)
 
     out_pickle_path = path.join(project_path, 'temp',
-                            'concepts for bindings with first-step synonyms.txt')
+                            'concepts for bindings with first-step synonyms2.txt')
     with open(out_pickle_path, 'w') as output_file:
         output_file.write(jsonpickle.encode(candidate_words))
-
 
 if __name__ == '__main__':
     main()

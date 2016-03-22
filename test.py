@@ -3,7 +3,7 @@ __author__ = 'Lenovo'
 
 import xml.etree.cElementTree as et
 #import cPickle, yaml, json
-import jsonpickle
+import jsonpickle, yaml
 import classes
 
 country_data_as_string = '''<?xml version="1.0"?>
@@ -34,7 +34,7 @@ root = et.fromstring(country_data_as_string)
 #print root.find(".*[year='%s']" % u'2011').get('name')
 
 #print cPickle.dumps('привет')
-with open ('./test.txt', 'w') as f:
+with open ('./test.txt', 'w+') as f:
     #yaml.dump('привет', f, encoding='utf-8')
     #json.dump(['привет', 'пока'], f, ensure_ascii=False)
     #json.dump(classes.CandidateWord(u'лала'), f, cls=classes.CustomObjEncoder, ensure_ascii=False)
@@ -45,6 +45,9 @@ with open ('./test.txt', 'w') as f:
     cw_json = jsonpickle.encode(cw)
     print cw_json
     print jsonpickle.decode(cw_json)
+
+    #cw_yaml = yaml.dump(cw, f)
+    #print yaml.load(f)
     #json.dump(cw, f, cls=classes.CustomObjEncoder, ensure_ascii=False, indent=4)
 #print json.dumps(['привет', 'пока'], ensure_ascii=False)
 
