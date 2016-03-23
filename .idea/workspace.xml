@@ -1,14 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="99a4749b-e6e6-4342-ac61-fefd9da48cf8" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/classes.py" afterPath="$PROJECT_DIR$/classes.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/concepts_for_binding.py" afterPath="$PROJECT_DIR$/concepts_for_binding.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/concepts_for_binding_with_te.py" afterPath="$PROJECT_DIR$/concepts_for_binding_with_te.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/scores.py" afterPath="$PROJECT_DIR$/scores.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test.py" afterPath="$PROJECT_DIR$/test.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-    </list>
+    <list default="true" id="99a4749b-e6e6-4342-ac61-fefd9da48cf8" name="Default" comment="" />
     <ignored path="thes_diplom.iws" />
     <ignored path=".idea/workspace.xml" />
     <file path="/test.py" changelist="99a4749b-e6e6-4342-ac61-fefd9da48cf8" time="1458653544886" ignored="false" />
@@ -46,10 +39,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="classes.py" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="classes.py" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/classes.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="105" column="53" selection-start="4391" selection-end="4391" vertical-scroll-proportion="0.0">
+            <state line="92" column="8" selection-start="3495" selection-end="3495" vertical-scroll-proportion="-0.23333333">
               <folding />
             </state>
           </provider>
@@ -75,10 +68,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="concepts_for_binding_with_te.py" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="concepts_for_binding_with_te.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/concepts_for_binding_with_te.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="43" column="53" selection-start="1909" selection-end="1909" vertical-scroll-proportion="0.7083333">
+            <state line="40" column="28" selection-start="1687" selection-end="1687" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -434,8 +427,8 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1723" height="939" extended-state="6" />
-    <editor active="true" />
+    <frame x="-8" y="-8" width="1723" height="939" extended-state="7" />
+    <editor active="false" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3298153" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -445,7 +438,7 @@
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3901809" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3736842" sideWeight="0.500301" order="9" side_tool="true" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.5025773" sideWeight="0.49969897" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.5025773" sideWeight="0.49969897" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
@@ -606,13 +599,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/classes.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="105" column="53" selection-start="4391" selection-end="4391" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../thes_diplom/common_parent_lemms.py">
       <provider selected="true" editor-type-id="text-editor">
         <state line="122" column="39" selection-start="5945" selection-end="5975" vertical-scroll-proportion="5.6194444">
@@ -631,7 +617,14 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/concepts_for_binding_with_te.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="43" column="53" selection-start="1909" selection-end="1909" vertical-scroll-proportion="0.7083333">
+        <state line="40" column="28" selection-start="1687" selection-end="1687" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/classes.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="92" column="8" selection-start="3495" selection-end="3495" vertical-scroll-proportion="-0.23333333">
           <folding />
         </state>
       </provider>

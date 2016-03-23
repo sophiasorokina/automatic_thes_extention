@@ -5,8 +5,10 @@ ehthumbs.db
 #Python compiled files
 *.pyc
 
+*.txt
+
 #IDE config files
-*.idea
+*.idea*
 
 #Git config files
 *.gitattributes
